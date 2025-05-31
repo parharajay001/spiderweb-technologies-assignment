@@ -1,7 +1,7 @@
 // src/components/Header.tsx
-import { Box, Avatar, Typography, IconButton, Badge } from '@mui/material';
+import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import NotificationsIconOutlined from '@mui/icons-material/NotificationsOutlined';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { Avatar, Badge, Box, IconButton, Typography } from '@mui/material';
 import { Logo } from '../assets/icons';
 import { ProfileImage } from '../assets/images';
 
@@ -20,12 +20,14 @@ const Header = () => {
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
         <IconButton size='small'>
-          <HelpOutlineIcon sx={{ height: '32px', width: '32px' }} />
+          <InfoOutlined sx={{ height: '32px', width: '32px' }} />
+          {/* <img src={InfoIcon} alt='' /> */}
         </IconButton>
 
         <IconButton size='small'>
           <Badge badgeContent={3} color='error'>
             <NotificationsIconOutlined sx={{ height: '32px', width: '32px' }} />
+            {/* <img src={BellIcon} alt='' /> */}
           </Badge>
         </IconButton>
 

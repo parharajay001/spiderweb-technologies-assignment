@@ -79,7 +79,7 @@ const Sidebar = ({ selectedSection, onSectionChange }) => {
                       height: '56px',
                       border: '2px solid #D175B6',
                       borderRadius: '8px',
-                      boxShadow: '0px 0px 10px 0px #D175B633',
+                      boxShadow: '0px 0px 10px 0px #D175B666',
                     }
                   : {}
               }
@@ -87,8 +87,13 @@ const Sidebar = ({ selectedSection, onSectionChange }) => {
               <ListItemText
                 primary={
                   <Typography
-                    color={selectedSection === section.name ? '#bb86fc' : 'text.primary'}
-                    sx={{ fontWeight: selectedSection === section.name ? 'bold' : 'normal' }}
+                    color={selectedSection === section.name ? '#D175B6' : 'text.primary'}
+                    sx={{
+                      fontWeight: selectedSection === section.name ? 'bold' : 'normal',
+                      ...(selectedSection === section.name
+                        ? { textShadow: '#D175B6 0px 0px 10px' }
+                        : {}),
+                    }}
                   >
                     {section.name}
                   </Typography>
@@ -187,8 +192,8 @@ const Sidebar = ({ selectedSection, onSectionChange }) => {
                                         color: '#D175B6',
                                         p: '8px 14px',
                                         border: '1px solid #D175B6',
-                                        boxShadow: '0px 0px 10px 0px #D175B633',
-                                        textShadow: '0px 0px 10px #D175B633',
+                                        boxShadow: '0px 0px 10px 0px #D175B666',
+                                        textShadow: '#D175B6 0px 0px 10px',
                                       }
                                     : {
                                         height: '100%',
