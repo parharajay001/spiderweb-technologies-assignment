@@ -5,6 +5,8 @@ import {
   Button,
   Grid,
   IconButton,
+  Pagination,
+  PaginationItem,
   Tab,
   Table,
   TableBody,
@@ -16,7 +18,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface TabPanelProps {
@@ -27,6 +29,22 @@ interface TabPanelProps {
 
 function AssignCoordinatorCoordinator(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 5;
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  // Mock data for positions
+  const positions = Array(8)
+    .fill(null)
+    .map((_, index) => ({
+      position: `Camera ${index + 1} (Video)`,
+      time: '9 am - 7 pm',
+      info: 'LP default',
+      quantity: 20,
+    }));
 
   return (
     <Box {...other}>
@@ -45,6 +63,7 @@ function AssignCoordinatorCoordinator(props: TabPanelProps) {
                   placeholder='Search Coordinator'
                   sx={{
                     '& .MuiOutlinedInput-root': {
+                      height: '44px',
                       color: '#fff',
                       '& fieldset': {
                         borderRadius: '8px',
@@ -271,22 +290,27 @@ function AssignCoordinatorCoordinator(props: TabPanelProps) {
               <Box
                 sx={{
                   border: '1px solid #D175B6',
+                  minHeight: '458px',
                   borderRadius: '12px',
-                  padding: '16px 0px',
                   bgcolor: '#000000',
                   boxShadow: '0px 0px 30px 0px #FFFFFF33',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  position: 'relative',
                 }}
               >
-                <TableContainer sx={{ maxHeight: '423px' }}>
+                <TableContainer sx={{ maxHeight: '369px' }}>
                   <Table stickyHeader>
                     <TableHead>
                       <TableRow>
                         <TableCell
                           sx={{
-                            padding: '8px 20px',
+                            borderRadius: '12px 0px 0px 0px',
                             color: 'inherit',
                             backgroundColor: '#000000',
                             borderBottom: '1px solid #D175B6',
+                            padding: '0px 20px',
+                            height: '44px',
                           }}
                         >
                           Position
@@ -297,6 +321,7 @@ function AssignCoordinatorCoordinator(props: TabPanelProps) {
                             color: 'inherit',
                             backgroundColor: '#000000',
                             borderBottom: '1px solid #D175B6',
+                            height: '44px',
                           }}
                         >
                           Time
@@ -307,6 +332,7 @@ function AssignCoordinatorCoordinator(props: TabPanelProps) {
                             color: 'inherit',
                             backgroundColor: '#000000',
                             borderBottom: '1px solid #D175B6',
+                            height: '44px',
                           }}
                         >
                           Info
@@ -317,16 +343,19 @@ function AssignCoordinatorCoordinator(props: TabPanelProps) {
                             color: 'inherit',
                             backgroundColor: '#000000',
                             borderBottom: '1px solid #D175B6',
+                            height: '44px',
                           }}
                         >
                           Quantity
                         </TableCell>
                         <TableCell
                           sx={{
+                            borderRadius: '0px 12px 0px 0px',
                             padding: '8px',
                             color: 'inherit',
                             backgroundColor: '#000000',
                             borderBottom: '1px solid #D175B6',
+                            height: '44px',
                           }}
                         >
                           Select Contractor
@@ -334,27 +363,63 @@ function AssignCoordinatorCoordinator(props: TabPanelProps) {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {Array(8)
-                        .fill(null)
-                        .map((_, index) => (
+                      {positions
+                        .slice((page - 1) * rowsPerPage, page * rowsPerPage)
+                        .map((row, index) => (
                           <TableRow
                             key={index}
                             sx={{
-                              '&:last-child td, &:last-child th': { border: 0 },
                               '&:hover': { backgroundColor: '#D175B61A' },
                             }}
                           >
-                            <TableCell sx={{ padding: '8px 20px', color: 'inherit' }}>
-                              Camera {index + 1} (Video)
+                            <TableCell
+                              height={'46px'}
+                              sx={{
+                                padding: '0px 20px',
+                                color: 'inherit',
+                                borderBottom: '1px solid #D175B6',
+                              }}
+                            >
+                              {row.position}
                             </TableCell>
-                            <TableCell sx={{ padding: '8px', color: 'inherit' }}>
-                              9 am - 7 pm
+                            <TableCell
+                              height={'46px'}
+                              sx={{
+                                padding: '0px',
+                                color: 'inherit',
+                                borderBottom: '1px solid #D175B6',
+                              }}
+                            >
+                              {row.time}
                             </TableCell>
-                            <TableCell sx={{ padding: '8px', color: 'inherit' }}>
-                              LP default
+                            <TableCell
+                              height={'46px'}
+                              sx={{
+                                padding: '0px',
+                                color: 'inherit',
+                                borderBottom: '1px solid #D175B6',
+                              }}
+                            >
+                              {row.info}
                             </TableCell>
-                            <TableCell sx={{ padding: '8px', color: 'inherit' }}>20</TableCell>
-                            <TableCell sx={{ padding: '8px', color: 'inherit' }}>
+                            <TableCell
+                              height={'46px'}
+                              sx={{
+                                padding: '0px',
+                                color: 'inherit',
+                                borderBottom: '1px solid #D175B6',
+                              }}
+                            >
+                              {row.quantity}
+                            </TableCell>
+                            <TableCell
+                              height={'46px'}
+                              sx={{
+                                padding: '0px 8px',
+                                color: 'inherit',
+                                borderBottom: '1px solid #D175B6',
+                              }}
+                            >
                               <Autocomplete
                                 size='small'
                                 options={[]}
@@ -365,6 +430,7 @@ function AssignCoordinatorCoordinator(props: TabPanelProps) {
                                     sx={{
                                       '& .MuiOutlinedInput-root': {
                                         borderRadius: '4px',
+                                        height: '36px',
                                         borderColor: '#D175B6',
                                         '&:hover fieldset': {
                                           borderColor: '#D175B6',
@@ -383,6 +449,61 @@ function AssignCoordinatorCoordinator(props: TabPanelProps) {
                     </TableBody>
                   </Table>
                 </TableContainer>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    background: '#000000',
+                    height: '54px',
+                    borderTop: '1px solid #D175B6',
+                    position: 'absolute',
+                    bottom: 0,
+                    width: '100%',
+                    borderRadius: '0px 0px 12px 12px',
+                  }}
+                >
+                  <Pagination
+                    count={Math.ceil(positions.length / rowsPerPage)}
+                    page={page}
+                    onChange={handleChangePage}
+                    color='primary'
+                    renderItem={(item) => (
+                      <PaginationItem
+                        slots={{
+                          previous: () => (
+                            <NorthIcon
+                              sx={{
+                                transform: 'rotate(-90deg)',
+                              }}
+                            />
+                          ),
+                          next: () => (
+                            <NorthIcon
+                              sx={{
+                                transform: 'rotate(90deg)',
+                              }}
+                            />
+                          ),
+                        }}
+                        {...item}
+                      />
+                    )}
+                    sx={{
+                      '& .MuiPaginationItem-root': {
+                        fontSize: '14px',
+                        color: 'white',
+                        background: 'transparent !important',
+                      },
+                      '& .Mui-selected': {
+                        color: '#D175B6 !important',
+                        height: '32px',
+                        width: '32px',
+                        background: 'transparent !important',
+                      },
+                    }}
+                  />
+                </Box>
               </Box>
             </Grid>
             <Grid

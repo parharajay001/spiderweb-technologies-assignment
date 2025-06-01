@@ -9,6 +9,9 @@ import EventRequestsTable from './pages/EventRequestsTable';
 import NewEventRequest from './pages/NewEventRequest';
 
 const darkTheme = createTheme({
+  typography: {
+    fontFamily: '"Kanit", sans-serif',
+  },
   palette: {
     mode: 'dark',
     primary: {
@@ -34,7 +37,7 @@ const darkTheme = createTheme({
     MuiTypography: {
       styleOverrides: {
         root: {
-          fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: '"Kanit", sans-serif',
         },
       },
     },

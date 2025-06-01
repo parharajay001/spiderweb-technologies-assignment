@@ -1,9 +1,14 @@
 /* Variables and Base Styles
 -------------------------------------------- */
 :root {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: 'Kanit', sans-serif;
   line-height: 1.5;
   font-weight: 400;
+}
+
+/* Ensure font is inherited by all elements */
+* {
+  font-family: 'Kanit', sans-serif;
 }
 
 /* Layout and Structure
