@@ -1,27 +1,10 @@
 // src/components/EventRequestsTable.tsx
-import AddIcon from '@mui/icons-material/Add';
-import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
+import React, { useState } from 'react';
+import { Box, Button, InputAdornment, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import AddIcon from '@mui/icons-material/Add';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import {
-  Box,
-  Button,
-  IconButton,
-  InputAdornment,
-  Pagination,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  PaginationItem,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { useState } from 'react';
-import NorthIcon from '@mui/icons-material/North';
+import CustomTable, { ColumnDef } from '../components/CustomTable';
 
 // Mock data
 const eventRequests = [
@@ -391,9 +374,91 @@ const EventRequestsTable = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 9;
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (event: React.ChangeEvent<unknown>, newPage: number) => {
     setPage(newPage);
   };
+
+  const columns: ColumnDef[] = [
+    {
+      field: 'eventName',
+      headerName: 'Event Name',
+      width: 200,
+      minWidth: 200,
+      sticky: true,
+      sortable: true,
+      bgcolor:'#D175B6',
+      renderCell: (row) => (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <VisibilityOutlinedIcon fontSize='small' sx={{ mr: 1 }} />
+          <div className='cell-content'>{row.eventName}</div>
+        </Box>
+      ),
+    },
+    {
+      field: 'eventStart',
+      headerName: 'Event Start',
+      width: 220,
+      minWidth: 220,
+      sortable: true,
+      bgcolor:'#D175B6',
+    },
+    {
+      field: 'eventEnd',
+      headerName: 'Event End',
+      width: 220,
+      minWidth: 220,
+      sortable: true,
+      bgcolor:'#D175B6',
+    },
+    {
+      field: 'clientName',
+      headerName: 'Client Name',
+      width: 220,
+      minWidth: 220,
+      sortable: true,
+      bgcolor:'#D175B6',
+    },
+    {
+      field: 'contactInfo',
+      headerName: 'Contact Info',
+      width: 250,
+      minWidth: 250,
+      sortable: true,
+      bgcolor:'#D175B6',
+    },
+    {
+      field: 'venue',
+      headerName: 'Venue',
+      width: 400,
+      minWidth: 400,
+      sortable: true,
+      bgcolor:'#D175B6',
+    },
+    {
+      field: 'city',
+      headerName: 'City',
+      width: 250,
+      minWidth: 250,
+      sortable: true,
+      bgcolor:'#D175B6',
+    },
+    {
+      field: 'state',
+      headerName: 'State',
+      width: 250,
+      minWidth: 250,
+      sortable: true,
+      bgcolor:'#D175B6',
+    },
+    {
+      field: 'zipcode',
+      headerName: 'Zipcode',
+      width: 120,
+      minWidth: 120,
+      sortable: true,
+      bgcolor:'#D175B6',
+    },
+  ];
 
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -436,245 +501,14 @@ const EventRequestsTable = () => {
         </Box>
       </Box>
 
-      <TableContainer
-        component={Paper}
-        sx={{
-          flex: 1,
-          bgcolor: 'transparent',
-          boxShadow: 'none',
-          borderRadius: '0px',
-          overflow: 'auto',
-          '& .MuiTableCell-root': {
-            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            maxWidth: 0, // This forces ellipsis to work in table cells
-          },
-          '& .sticky-column': {
-            position: 'sticky',
-            left: 0,
-            zIndex: 3,
-            background: 'inherit',
-            backdropFilter: 'blur(10px)',
-          },
-          '& .sticky-header': {
-            position: 'sticky',
-            left: 0,
-            zIndex: 4,
-            background: '#D175B6',
-          },
-        }}
-      >
-        <Table stickyHeader>
-          <TableHead>
-            <TableRow>
-              <TableCell
-                sx={{
-                  bgcolor: '#D175B6',
-                  color: 'white',
-                  p: '0px 20px',
-                  m: 0,
-                  width: '200px',
-                  minWidth: '200px',
-                  '& .cell-content': {
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    width: '150px', // Adjust based on icon space
-                  },
-                }}
-                className='sticky-header'
-              >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  Event Name
-                  <ExpandCircleDownIcon fontSize='small' sx={{ ml: 0.5 }} />
-                </Box>
-              </TableCell>
-              <TableCell
-                sx={{ bgcolor: '#D175B6', color: 'white', width: '220px', minWidth: '220px' }}
-              >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  Event Start
-                  <ExpandCircleDownIcon fontSize='small' sx={{ ml: 0.5 }} />
-                </Box>
-              </TableCell>
-              <TableCell
-                sx={{ bgcolor: '#D175B6', color: 'white', width: '220px', minWidth: '220px' }}
-              >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  Event End
-                  <ExpandCircleDownIcon fontSize='small' sx={{ ml: 0.5 }} />
-                </Box>
-              </TableCell>
-              <TableCell
-                sx={{ bgcolor: '#D175B6', color: 'white', width: '220px', minWidth: '220px' }}
-              >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  Client Name
-                  <ExpandCircleDownIcon fontSize='small' sx={{ ml: 0.5 }} />
-                </Box>
-              </TableCell>
-              <TableCell
-                sx={{ bgcolor: '#D175B6', color: 'white', width: '250px', minWidth: '250px' }}
-              >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  Contact Info <ExpandCircleDownIcon fontSize='small' sx={{ ml: 0.5 }} />
-                </Box>
-              </TableCell>
-              <TableCell
-                sx={{ bgcolor: '#D175B6', color: 'white', width: '400px', minWidth: '400px' }}
-              >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  Venue
-                  <ExpandCircleDownIcon fontSize='small' sx={{ ml: 0.5 }} />
-                </Box>
-              </TableCell>
-              <TableCell
-                sx={{ bgcolor: '#D175B6', color: 'white', width: '250px', minWidth: '250px' }}
-              >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  City
-                  <ExpandCircleDownIcon fontSize='small' sx={{ ml: 0.5 }} />
-                </Box>
-              </TableCell>
-              <TableCell
-                sx={{ bgcolor: '#D175B6', color: 'white', width: '250px', minWidth: '250px' }}
-              >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  State
-                  <ExpandCircleDownIcon fontSize='small' sx={{ ml: 0.5 }} />
-                </Box>
-              </TableCell>
-              <TableCell
-                sx={{ bgcolor: '#D175B6', color: 'white', width: '120px', minWidth: '120px' }}
-              >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  Zipcode
-                  <ExpandCircleDownIcon fontSize='small' sx={{ ml: 0.5 }} />
-                </Box>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {eventRequests.slice((page - 1) * rowsPerPage, page * rowsPerPage).map((row) => (
-              <TableRow key={row.id} hover sx={{ height: '50px' }}>
-                <TableCell
-                  sx={{
-                    p: '0px 20px',
-                    m: 0,
-                    bgcolor: '#000000',
-                    borderBottom: '1px solid #D175B6 !important',
-                    '& .cell-content': {
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      width: '150px',
-                    },
-                  }}
-                  className='sticky-column'
-                  title={row.eventName} // Add tooltip for truncated text
-                >
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <IconButton size='small' sx={{ mr: 1 }}>
-                      <VisibilityOutlinedIcon fontSize='small' />
-                    </IconButton>
-                    <div className='cell-content'>{row.eventName}</div>
-                  </Box>
-                </TableCell>
-                <TableCell
-                  sx={{ borderBottom: '1px solid #D175B6 !important' }}
-                  title={row.eventStart}
-                >
-                  {row.eventStart}
-                </TableCell>
-                <TableCell
-                  sx={{ borderBottom: '1px solid #D175B6 !important' }}
-                  title={row.eventEnd}
-                >
-                  {row.eventEnd}
-                </TableCell>
-                <TableCell
-                  sx={{ borderBottom: '1px solid #D175B6 !important' }}
-                  title={row.clientName}
-                >
-                  {row.clientName}
-                </TableCell>
-                <TableCell
-                  sx={{ borderBottom: '1px solid #D175B6 !important' }}
-                  title={row.contactInfo}
-                >
-                  {row.contactInfo}
-                </TableCell>
-                <TableCell sx={{ borderBottom: '1px solid #D175B6 !important' }} title={row.venue}>
-                  {row.venue}
-                </TableCell>
-                <TableCell sx={{ borderBottom: '1px solid #D175B6 !important' }} title={row.city}>
-                  {row.city}
-                </TableCell>
-                <TableCell sx={{ borderBottom: '1px solid #D175B6 !important' }} title={row.state}>
-                  {row.state}
-                </TableCell>
-                <TableCell
-                  sx={{ borderBottom: '1px solid #D175B6 !important' }}
-                  title={row.zipcode}
-                >
-                  {row.zipcode}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          background: '#000000',
-          height: '54px',
-        }}
-      >
-        <Pagination
-          count={Math.ceil(eventRequests.length / rowsPerPage)}
-          page={page}
-          onChange={handleChangePage}
-          color='primary'
-          renderItem={(item) => (
-            <PaginationItem
-              slots={{
-                previous: () => (
-                  <NorthIcon
-                    sx={{
-                      transform: 'rotate(-90deg)',
-                    }}
-                  />
-                ),
-                next: () => (
-                  <NorthIcon
-                    sx={{
-                      transform: 'rotate(90deg)',
-                    }}
-                  />
-                ),
-              }}
-              {...item}
-            />
-          )}
-          sx={{
-            '& .MuiPaginationItem-root': {
-              fontSize: '14px',
-              color: 'white',
-              background: 'transparent !important',
-            },
-            '& .Mui-selected': {
-              color: '#D175B6 !important',
-              height: '32px',
-              width: '32px',
-              background: 'transparent !important',
-            },
-          }}
-        />
-      </Box>
+      <CustomTable
+        columns={columns}
+        rows={eventRequests}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        onPageChange={handleChangePage}
+        stickyHeaderbgColor='#D175B6'
+      />
     </Box>
   );
 };

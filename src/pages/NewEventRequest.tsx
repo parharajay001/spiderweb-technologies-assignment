@@ -5,21 +5,14 @@ import {
   Button,
   Grid,
   IconButton,
-  Pagination,
-  PaginationItem,
   Tab,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
   Tabs,
   TextField,
   Typography,
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import CustomTable, { ColumnDef } from '../components/CustomTable';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -32,7 +25,7 @@ function AssignCoordinatorCoordinator(props: TabPanelProps) {
   const [page, setPage] = useState(1);
   const rowsPerPage = 5;
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (event: React.ChangeEvent<unknown>, newPage: number) => {
     setPage(newPage);
   };
 
@@ -45,6 +38,73 @@ function AssignCoordinatorCoordinator(props: TabPanelProps) {
       info: 'LP default',
       quantity: 20,
     }));
+  const columns: ColumnDef[] = [
+    {
+      field: 'position',
+      headerName: 'Position',
+      width: 200,
+      minWidth: 200,
+      sortable: true,
+    },
+    {
+      field: 'time',
+      headerName: 'Time',
+      width: 150,
+      minWidth: 150,
+      sortable: true,
+    },
+    {
+      field: 'info',
+      headerName: 'Info',
+      width: 150,
+      minWidth: 150,
+      sortable: true,
+    },
+    {
+      field: 'quantity',
+      headerName: 'Quantity',
+      width: 100,
+      minWidth: 100,
+      sortable: true,
+    },
+    {
+      field: 'contractor',
+      headerName: 'Contractor',
+      width: 200,
+      minWidth: 200,
+      sortable: true,
+      renderCell: (row) => (
+        <Autocomplete
+          size='small'
+          fullWidth
+          options={['Contractor 1', 'Contractor 2', 'Contractor 3']}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              size='small'
+              placeholder='Select Contractor'
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  height: '36px',
+                  color: '#fff',
+                  '& fieldset': {
+                    borderRadius: '4px',
+                    borderColor: '#D175B6',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#D175B6',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#D175B6',
+                  },
+                },
+              }}
+            />
+          )}
+        />
+      ),
+    },
+  ];
 
   return (
     <Box {...other}>
@@ -181,6 +241,7 @@ function AssignCoordinatorCoordinator(props: TabPanelProps) {
               >
                 {[1, 2, 3, 4, 5].map((room) => (
                   <Box
+                    className='meeting-room'
                     key={room}
                     sx={{
                       border: '1px solid #D175B6',
@@ -191,7 +252,7 @@ function AssignCoordinatorCoordinator(props: TabPanelProps) {
                       ...(room === 1 ? { backgroundColor: '#D175B6' } : {}),
                       boxShadow: '0px 0px 30px 0px #D175B633',
                       '&:hover': {
-                        backgroundColor: '#D175B61A',
+                        backgroundColor: '#D175B666',
                       },
                     }}
                   >
@@ -263,12 +324,15 @@ function AssignCoordinatorCoordinator(props: TabPanelProps) {
                             />
                           </filter>
                         </defs>
-                      </svg>
+                      </svg>{' '}
                       <Typography
                         sx={{
                           fontSize: '16px',
                           fontWeight: '500',
                           color: room === 1 ? '#000000' : '#D175B6',
+                          '.meeting-room:hover &': {
+                            color: room === 1 ? '#ffffff' : '#D175B6',
+                          },
                         }}
                       >
                         {12} Positions
@@ -290,220 +354,20 @@ function AssignCoordinatorCoordinator(props: TabPanelProps) {
               <Box
                 sx={{
                   border: '1px solid #D175B6',
-                  minHeight: '458px',
+                  height: '460px',
                   borderRadius: '12px',
                   bgcolor: '#000000',
                   boxShadow: '0px 0px 30px 0px #FFFFFF33',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  position: 'relative',
+                  overflow: 'hidden',
                 }}
               >
-                <TableContainer sx={{ maxHeight: '369px' }}>
-                  <Table stickyHeader>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell
-                          sx={{
-                            borderRadius: '12px 0px 0px 0px',
-                            color: 'inherit',
-                            backgroundColor: '#000000',
-                            borderBottom: '1px solid #D175B6',
-                            padding: '0px 20px',
-                            height: '44px',
-                          }}
-                        >
-                          Position
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            padding: '8px',
-                            color: 'inherit',
-                            backgroundColor: '#000000',
-                            borderBottom: '1px solid #D175B6',
-                            height: '44px',
-                          }}
-                        >
-                          Time
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            padding: '8px',
-                            color: 'inherit',
-                            backgroundColor: '#000000',
-                            borderBottom: '1px solid #D175B6',
-                            height: '44px',
-                          }}
-                        >
-                          Info
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            padding: '8px',
-                            color: 'inherit',
-                            backgroundColor: '#000000',
-                            borderBottom: '1px solid #D175B6',
-                            height: '44px',
-                          }}
-                        >
-                          Quantity
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            borderRadius: '0px 12px 0px 0px',
-                            padding: '8px',
-                            color: 'inherit',
-                            backgroundColor: '#000000',
-                            borderBottom: '1px solid #D175B6',
-                            height: '44px',
-                          }}
-                        >
-                          Select Contractor
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {positions
-                        .slice((page - 1) * rowsPerPage, page * rowsPerPage)
-                        .map((row, index) => (
-                          <TableRow
-                            key={index}
-                            sx={{
-                              '&:hover': { backgroundColor: '#D175B61A' },
-                            }}
-                          >
-                            <TableCell
-                              height={'46px'}
-                              sx={{
-                                padding: '0px 20px',
-                                color: 'inherit',
-                                borderBottom: '1px solid #D175B6',
-                              }}
-                            >
-                              {row.position}
-                            </TableCell>
-                            <TableCell
-                              height={'46px'}
-                              sx={{
-                                padding: '0px',
-                                color: 'inherit',
-                                borderBottom: '1px solid #D175B6',
-                              }}
-                            >
-                              {row.time}
-                            </TableCell>
-                            <TableCell
-                              height={'46px'}
-                              sx={{
-                                padding: '0px',
-                                color: 'inherit',
-                                borderBottom: '1px solid #D175B6',
-                              }}
-                            >
-                              {row.info}
-                            </TableCell>
-                            <TableCell
-                              height={'46px'}
-                              sx={{
-                                padding: '0px',
-                                color: 'inherit',
-                                borderBottom: '1px solid #D175B6',
-                              }}
-                            >
-                              {row.quantity}
-                            </TableCell>
-                            <TableCell
-                              height={'46px'}
-                              sx={{
-                                padding: '0px 8px',
-                                color: 'inherit',
-                                borderBottom: '1px solid #D175B6',
-                              }}
-                            >
-                              <Autocomplete
-                                size='small'
-                                options={[]}
-                                renderInput={(params) => (
-                                  <TextField
-                                    {...params}
-                                    placeholder='Select Contractor'
-                                    sx={{
-                                      '& .MuiOutlinedInput-root': {
-                                        borderRadius: '4px',
-                                        height: '36px',
-                                        borderColor: '#D175B6',
-                                        '&:hover fieldset': {
-                                          borderColor: '#D175B6',
-                                        },
-                                        '&.Mui-focused fieldset': {
-                                          borderColor: '#D175B6',
-                                        },
-                                      },
-                                    }}
-                                  />
-                                )}
-                              />
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    background: '#000000',
-                    height: '54px',
-                    borderTop: '1px solid #D175B6',
-                    position: 'absolute',
-                    bottom: 0,
-                    width: '100%',
-                    borderRadius: '0px 0px 12px 12px',
-                  }}
-                >
-                  <Pagination
-                    count={Math.ceil(positions.length / rowsPerPage)}
-                    page={page}
-                    onChange={handleChangePage}
-                    color='primary'
-                    renderItem={(item) => (
-                      <PaginationItem
-                        slots={{
-                          previous: () => (
-                            <NorthIcon
-                              sx={{
-                                transform: 'rotate(-90deg)',
-                              }}
-                            />
-                          ),
-                          next: () => (
-                            <NorthIcon
-                              sx={{
-                                transform: 'rotate(90deg)',
-                              }}
-                            />
-                          ),
-                        }}
-                        {...item}
-                      />
-                    )}
-                    sx={{
-                      '& .MuiPaginationItem-root': {
-                        fontSize: '14px',
-                        color: 'white',
-                        background: 'transparent !important',
-                      },
-                      '& .Mui-selected': {
-                        color: '#D175B6 !important',
-                        height: '32px',
-                        width: '32px',
-                        background: 'transparent !important',
-                      },
-                    }}
-                  />
-                </Box>
+                <CustomTable
+                  columns={columns}
+                  rows={positions}
+                  page={page}
+                  rowsPerPage={rowsPerPage}
+                  onPageChange={handleChangePage}
+                />
               </Box>
             </Grid>
             <Grid
