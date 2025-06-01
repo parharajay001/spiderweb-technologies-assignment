@@ -43,7 +43,11 @@ const StarIcon = ({ room }: { room: number }) => (
         <feComposite in2='hardAlpha' operator='out' />
         <feColorMatrix
           type='matrix'
-          values={room === 1 ? '0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0' : '0 0 0 0 0.82 0 0 0 0 0.46 0 0 0 0 0.71 0 0 0 1 0'}
+          values={
+            room === 1
+              ? '0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'
+              : '0 0 0 0 0.82 0 0 0 0 0.46 0 0 0 0 0.71 0 0 0 1 0'
+          }
         />
         <feBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow_0_481' />
         <feBlend mode='normal' in='SourceGraphic' in2='effect1_dropShadow_0_481' result='shape' />
@@ -62,13 +66,13 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
   return (
     <MeetingRoomBox isSelected={isSelected} onClick={() => onSelect(roomNumber)}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Typography sx={{ fontSize: '20px', fontWeight: '500' }}>
+        <Typography sx={{ fontSize: { xs: '16px', sm: '18px', md: '20px' }, fontWeight: '500' }}>
           Meeting Room {roomNumber}
         </Typography>
         <StarIcon room={roomNumber} />
         <Typography
           sx={{
-            fontSize: '16px',
+            fontSize: { xs: '12px', sm: '14px', md: '16px' },
             fontWeight: '500',
             color: isSelected ? '#000000' : '#D175B6',
             '.meeting-room:hover &': {
@@ -79,7 +83,9 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
           {positionCount} Positions
         </Typography>
       </Box>
-      <Typography sx={{ fontSize: '12px', color: '#FFFFFF' }}>{dateRange}</Typography>
+      <Typography sx={{ fontSize: { xs: '8px', sm: '10px', md: '12px' }, color: '#FFFFFF' }}>
+        {dateRange}
+      </Typography>
     </MeetingRoomBox>
   );
 };

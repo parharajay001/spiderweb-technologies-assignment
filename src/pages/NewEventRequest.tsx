@@ -1,5 +1,15 @@
 import NorthIcon from '@mui/icons-material/North';
-import { Autocomplete, Box, Grid, IconButton, Tab, Tabs, Typography } from '@mui/material';
+import {
+  Autocomplete,
+  Box,
+  Grid,
+  IconButton,
+  Tab,
+  Tabs,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CustomTable, { ColumnDef } from '../components/CustomTable';
@@ -81,7 +91,7 @@ function AssignCoordinatorCoordinator() {
 
   return (
     <Grid container spacing={'20px'}>
-      <Grid size={6}>
+      <Grid size={{ xs: 12, md: 6 }} sx={{ display: 'flex', flexDirection: 'column' }}>
         <Typography sx={{ fontSize: '24px', fontWeight: '400', mb: 2 }}>
           Assign Coordinator
         </Typography>
@@ -100,7 +110,7 @@ function AssignCoordinatorCoordinator() {
           </Grid>
         </Grid>
       </Grid>
-      <Grid size={6}>
+      <Grid size={{ xs: 12, md: 6 }} sx={{ display: 'flex', flexDirection: 'column' }}>
         <Typography sx={{ fontSize: '24px', fontWeight: '400', mb: 2 }}>
           Event Name <span style={{ fontSize: '20px', fontWeight: '300' }}>(Venue Here)</span>
         </Typography>
@@ -125,7 +135,7 @@ function AssignCoordinatorCoordinator() {
           Assign Contractor
         </Typography>
         <Grid container spacing={'20px'}>
-          <Grid size={3.1}>
+          <Grid size={{ md: 3.1, xs: 12 }}>
             <Grid
               sx={{
                 border: '1px solid #D175B6',
@@ -150,7 +160,7 @@ function AssignCoordinatorCoordinator() {
               ))}
             </Grid>
           </Grid>
-          <Grid size={8.9}>
+          <Grid size={{ md: 8.9, xs: 12 }}>
             <Grid>
               <Typography sx={{ fontSize: '18px', fontWeight: '500', mb: '12px' }}>
                 Positions
@@ -195,7 +205,7 @@ function CustomTabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Grid sx={{ p: 3 }}>{children}</Grid>}
+      {value === index && children}
     </div>
   );
 }
@@ -210,14 +220,16 @@ function a11yProps(index: number) {
 export default function NewEventRequest() {
   const navigate = useNavigate();
   const [value, setValue] = React.useState(1);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.up('md'));
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
   return (
-    <Grid container spacing={'20px'} sx={{ p: '20px 40px' }}>
-      <Grid size={12}>
+    <Grid container spacing={'20px'} sx={{ p: { xs: '20px 20px', md: '20px 40px' } }}>
+      <Grid size={12} sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         <Grid sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <IconButton
             onClick={() => navigate(-1)}
@@ -225,17 +237,18 @@ export default function NewEventRequest() {
           >
             <NorthIcon sx={{ transform: 'rotate(-90deg)' }} />
           </IconButton>
-          <Typography sx={{ fontSize: { xs: '36px', md: '40px' }, fontWeight: '400' }}>
+          <Typography sx={{ fontSize: { xs: '22px', md: '40px' }, fontWeight: '400' }}>
             Event Name
           </Typography>
-          <Typography style={{ fontSize: '24px', fontWeight: '300' }}>(Venue Details)</Typography>
+          <Typography sx={{ fontSize: { xs: '16px', md: '24px' }, fontWeight: '300' }}>
+            (Venue Details)
+          </Typography>
         </Grid>
 
-        <Grid sx={{ width: '100%' }}>
+        <Grid sx={{ width: '100%', gap: '20px', display: 'flex', flexDirection: 'column' }}>
           <Grid
             sx={{
-              width: '674px',
-              height: '50px',
+              ...(isMobile ? { width: '674px', height: '50px' } : {}),
               borderRadius: '8px',
               border: '2px solid #D175B6',
               overflow: 'hidden',
@@ -245,6 +258,8 @@ export default function NewEventRequest() {
               value={value}
               onChange={handleChange}
               aria-label='basic tabs example'
+              // variant='fullWidth'
+              orientation={isMobile ? 'horizontal' : 'vertical'}
               sx={{
                 '& .MuiTab-root': {
                   padding: '0px 20px',

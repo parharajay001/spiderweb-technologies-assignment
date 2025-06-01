@@ -67,7 +67,6 @@ export const EventInfoBox = styled(Box)({
   border: '1px solid #D175B6',
   fontSize: '14px',
   fontWeight: '300',
-  height: '32px',
   display: 'flex',
   alignItems: 'center',
   padding: '4px 10px',
