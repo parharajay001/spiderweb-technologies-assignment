@@ -91,7 +91,7 @@ function AssignCoordinatorCoordinator() {
 
   return (
     <Grid container spacing={'20px'}>
-      <Grid size={{ xs: 12, md: 6 }} sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Grid size={{ xs: 12, md: 12, lg: 6 }} sx={{ display: 'flex', flexDirection: 'column' }}>
         <Typography sx={{ fontSize: '24px', fontWeight: '400', mb: 2 }}>
           Assign Coordinator
         </Typography>
@@ -110,7 +110,7 @@ function AssignCoordinatorCoordinator() {
           </Grid>
         </Grid>
       </Grid>
-      <Grid size={{ xs: 12, md: 6 }} sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Grid size={{ xs: 12, md: 12, lg: 6 }} sx={{ display: 'flex', flexDirection: 'column' }}>
         <Typography sx={{ fontSize: '24px', fontWeight: '400', mb: 2 }}>
           Event Name <span style={{ fontSize: '20px', fontWeight: '300' }}>(Venue Here)</span>
         </Typography>
@@ -135,12 +135,13 @@ function AssignCoordinatorCoordinator() {
           Assign Contractor
         </Typography>
         <Grid container spacing={'20px'}>
-          <Grid size={{ md: 3.1, xs: 12 }}>
+          <Grid size={{ xl: 'auto', xs: 12 }}>
             <Grid
               sx={{
                 border: '1px solid #D175B6',
                 borderRadius: '12px',
                 gap: '16px',
+                width: { xl: '340px' },
                 padding: '16px',
                 display: 'flex',
                 flexDirection: 'column',
@@ -160,7 +161,7 @@ function AssignCoordinatorCoordinator() {
               ))}
             </Grid>
           </Grid>
-          <Grid size={{ md: 8.9, xs: 12 }}>
+          <Grid size={{ xl: 'grow', xs: 12 }}>
             <Grid>
               <Typography sx={{ fontSize: '18px', fontWeight: '500', mb: '12px' }}>
                 Positions
@@ -258,7 +259,7 @@ export default function NewEventRequest() {
               value={value}
               onChange={handleChange}
               aria-label='basic tabs example'
-              variant='fullWidth'
+              variant={isMobile ? 'standard' : 'fullWidth'}
               orientation={isMobile ? 'horizontal' : 'vertical'}
               sx={{
                 '& .MuiTab-root': {
