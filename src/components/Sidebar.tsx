@@ -13,31 +13,48 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const sections = [
   {
     name: 'Events',
-    subsections: ['New Requests', 'Estimate', 'Events', 'Partial Requests'],
+    path: '/events',
+    subsections: [
+      { name: 'New Requests', path: '/events/new-request' },
+      { name: 'Estimate', path: '/events/estimate' },
+      { name: 'Events', path: '/events' },
+      { name: 'Partial Requests', path: '/events/partial-requests' },
+    ],
   },
   {
     name: 'Positions',
+    path: '/positions',
     subsections: [],
   },
   {
     name: 'Contractors',
+    path: '/contractors',
     subsections: [],
   },
   {
     name: 'Users',
-    subsections: ['Admins', 'Clients', 'Contractors'],
+    path: '/users',
+    subsections: [
+      { name: 'Admins', path: '/users/admins' },
+      { name: 'Clients', path: '/users/clients' },
+      { name: 'Contractors', path: '/users/contractors' },
+    ],
   },
   {
     name: 'Profile',
+    path: '/profile',
     subsections: [],
   },
 ];
 
 const Sidebar = ({ selectedSection, onSectionChange }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [openSections, setOpenSections] = useState({
     Events: true,
     Users: true,
@@ -48,6 +65,11 @@ const Sidebar = ({ selectedSection, onSectionChange }) => {
       ...prev,
       [section]: !prev[section],
     }));
+  };
+
+  const handleNavigation = (section, path) => {
+    onSectionChange(section);
+    navigate(path);
   };
 
   return (
@@ -68,7 +90,7 @@ const Sidebar = ({ selectedSection, onSectionChange }) => {
           <Box key={section.name}>
             <ListItemButton
               onClick={() => {
-                onSectionChange(section.name);
+                handleNavigation(section.name, section.path);
                 if (section.subsections.length > 0) {
                   toggleSection(section.name);
                 }
@@ -108,11 +130,14 @@ const Sidebar = ({ selectedSection, onSectionChange }) => {
                 <List component='div' disablePadding>
                   {section.subsections.map((subsection, j) => (
                     <Box
+                      key={subsection.name}
                       sx={{
                         pl: 4,
                       }}
                     >
-                      <ListItemButton key={subsection}>
+                      <ListItemButton
+                        onClick={() => handleNavigation(section.name, subsection.path)}
+                      >
                         <ListItemText
                           sx={{
                             p: '0px',
@@ -184,7 +209,7 @@ const Sidebar = ({ selectedSection, onSectionChange }) => {
                               <Typography
                                 variant='body2'
                                 sx={
-                                  i - j === 0
+                                  location.pathname === subsection.path
                                     ? {
                                         height: '100%',
                                         width: '100%',
@@ -203,7 +228,7 @@ const Sidebar = ({ selectedSection, onSectionChange }) => {
                                       }
                                 }
                               >
-                                {subsection}
+                                {subsection.name}
                               </Typography>
                             </Box>
                           }
@@ -227,6 +252,10 @@ const Sidebar = ({ selectedSection, onSectionChange }) => {
         }}
       >
         <ListItemButton
+          onClick={() => {
+            // Add logout logic here
+            console.log('Logout clicked');
+          }}
           sx={{
             display: 'flex',
             alignItems: 'center',

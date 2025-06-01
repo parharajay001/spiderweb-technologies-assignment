@@ -1,10 +1,12 @@
-import { useState } from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { useState } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import EventRequestsTable from './pages/EventRequestsTable';
-import Header from './components/Header';
+import NewEventRequest from './pages/NewEventRequest';
 
 const darkTheme = createTheme({
   palette: {
@@ -40,7 +42,16 @@ const darkTheme = createTheme({
 });
 
 function App() {
-  const [selectedSection, setSelectedSection] = useState('Events');
+  const location = useLocation();
+  const [selectedSection, setSelectedSection] = useState(() => {
+    const path = location.pathname;
+    if (path.startsWith('/events')) return 'Events';
+    if (path.startsWith('/positions')) return 'Positions';
+    if (path.startsWith('/contractors')) return 'Contractors';
+    if (path.startsWith('/users')) return 'Users';
+    if (path.startsWith('/profile')) return 'Profile';
+    return 'Events';
+  });
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -66,7 +77,23 @@ function App() {
               boxShadow: '0px 0px 30px 0px #D175B633',
             }}
           >
-            <EventRequestsTable />
+            <Routes>
+              {/* Events Routes */}
+              <Route path='/' element={<Navigate to='/events' replace={true} />} />
+              <Route path='/events' element={<EventRequestsTable />} />
+              <Route path='/events/new-request' element={<NewEventRequest />} />
+              <Route path='/events/estimate' element={<div>Estimate</div>} />
+              <Route path='/events/partial-requests' element={<div>Partial Requests</div>} />
+
+              {/* Other Routes - Add placeholder components or messages */}
+              <Route path='/positions' element={<div>Positions Page</div>} />
+              <Route path='/contractors' element={<div>Contractors Page</div>} />
+              <Route path='/users/*' element={<div>Users Page</div>} />
+              <Route path='/profile' element={<div>Profile Page</div>} />
+
+              {/* 404 Route */}
+              <Route path='*' element={<div>Page not found</div>} />
+            </Routes>
           </Box>
         </Box>
       </Box>
