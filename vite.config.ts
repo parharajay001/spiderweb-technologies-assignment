@@ -11,6 +11,7 @@ export default defineConfig({
       }
     })
   ],
+  base: '/event-dashboard/',
   resolve: {
     alias: {
       '@': '/src'
