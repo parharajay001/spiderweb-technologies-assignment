@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, InputAdornment, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, InputAdornment, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -11,7 +11,9 @@ interface TableHeaderProps {
 
 const TableHeader: React.FC<TableHeaderProps> = ({ title, onSearch, onAdd }) => {
   return (
-    <Box
+    <Grid
+      container
+      spacing={2}
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
@@ -19,9 +21,13 @@ const TableHeader: React.FC<TableHeaderProps> = ({ title, onSearch, onAdd }) => 
         p: '20px 40px',
       }}
     >
-      <Typography sx={{ fontSize: '40px', fontWeight: 'bold' }}>{title}</Typography>
+      <Grid>
+        <Typography sx={{ fontSize: { xs: '36px', md: '40px' }, fontWeight: 'bold' }}>
+          {title}
+        </Typography>
+      </Grid>
 
-      <Box sx={{ display: 'flex', gap: '10px' }}>
+      <Grid sx={{ display: 'flex', gap: '10px' }}>
         <TextField
           placeholder='Search here'
           size='small'
@@ -49,8 +55,8 @@ const TableHeader: React.FC<TableHeaderProps> = ({ title, onSearch, onAdd }) => 
         >
           <AddIcon />
         </Button>
-      </Box>
-    </Box>
+      </Grid>
+    </Grid>
   );
 };
 
