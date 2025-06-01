@@ -599,7 +599,7 @@ export default function NewEventRequest() {
       <Box sx={{ width: '100%' }}>
         <Box
           sx={{
-            width: '702px',
+            width: '674px',
             height: '50px',
             borderRadius: '8px',
             border: '2px solid #D175B6',
@@ -612,7 +612,7 @@ export default function NewEventRequest() {
             aria-label='basic tabs example'
             sx={{
               '& .MuiTab-root': {
-                padding: '0 20px',
+                padding: '0px 20px',
                 transition: 'all 0.3s ease-in-out',
                 '&.Mui-selected': {
                   background: '#D175B6',
