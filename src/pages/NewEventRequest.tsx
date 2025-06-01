@@ -23,14 +23,14 @@ interface TabPanelProps {
 function AssignCoordinatorCoordinator(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
   const [page, setPage] = useState(1);
-  const rowsPerPage = 5;
+  const rowsPerPage = 7;
 
   const handleChangePage = (event: React.ChangeEvent<unknown>, newPage: number) => {
     setPage(newPage);
   };
 
   // Mock data for positions
-  const positions = Array(8)
+  const positions = Array(20)
     .fill(null)
     .map((_, index) => ({
       position: `Camera ${index + 1} (Video)`,
