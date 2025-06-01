@@ -62,8 +62,8 @@ function AssignCoordinatorCoordinator() {
     {
       field: 'quantity',
       headerName: 'Quantity',
-      width: 100,
-      minWidth: 100,
+      width: 150,
+      minWidth: 150,
       sortable: true,
     },
     {
@@ -258,7 +258,7 @@ export default function NewEventRequest() {
               value={value}
               onChange={handleChange}
               aria-label='basic tabs example'
-              // variant='fullWidth'
+              variant='fullWidth'
               orientation={isMobile ? 'horizontal' : 'vertical'}
               sx={{
                 '& .MuiTab-root': {
