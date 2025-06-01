@@ -1,10 +1,11 @@
 // src/components/EventRequestsTable.tsx
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import { Box, Button, InputAdornment, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import CustomTable, { ColumnDef } from '../components/CustomTable';
+import { useNavigate } from 'react-router-dom';
 
 // Mock data
 const eventRequests = [
@@ -373,7 +374,7 @@ const eventRequests = [
 const EventRequestsTable = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 9;
-
+  const navigate = useNavigate();
   const handleChangePage = (event: React.ChangeEvent<unknown>, newPage: number) => {
     setPage(newPage);
   };
@@ -386,9 +387,12 @@ const EventRequestsTable = () => {
       minWidth: 200,
       sticky: true,
       sortable: true,
-      bgcolor:'#D175B6',
+      bgcolor: '#D175B6',
       renderCell: (row) => (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box
+          sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+          onClick={() => navigate(`/events/new-request?id=${row.id}`)}
+        >
           <VisibilityOutlinedIcon fontSize='small' sx={{ mr: 1 }} />
           <div className='cell-content'>{row.eventName}</div>
         </Box>
@@ -400,7 +404,7 @@ const EventRequestsTable = () => {
       width: 220,
       minWidth: 220,
       sortable: true,
-      bgcolor:'#D175B6',
+      bgcolor: '#D175B6',
     },
     {
       field: 'eventEnd',
@@ -408,7 +412,7 @@ const EventRequestsTable = () => {
       width: 220,
       minWidth: 220,
       sortable: true,
-      bgcolor:'#D175B6',
+      bgcolor: '#D175B6',
     },
     {
       field: 'clientName',
@@ -416,7 +420,7 @@ const EventRequestsTable = () => {
       width: 220,
       minWidth: 220,
       sortable: true,
-      bgcolor:'#D175B6',
+      bgcolor: '#D175B6',
     },
     {
       field: 'contactInfo',
@@ -424,7 +428,7 @@ const EventRequestsTable = () => {
       width: 250,
       minWidth: 250,
       sortable: true,
-      bgcolor:'#D175B6',
+      bgcolor: '#D175B6',
     },
     {
       field: 'venue',
@@ -432,7 +436,7 @@ const EventRequestsTable = () => {
       width: 400,
       minWidth: 400,
       sortable: true,
-      bgcolor:'#D175B6',
+      bgcolor: '#D175B6',
     },
     {
       field: 'city',
@@ -440,7 +444,7 @@ const EventRequestsTable = () => {
       width: 250,
       minWidth: 250,
       sortable: true,
-      bgcolor:'#D175B6',
+      bgcolor: '#D175B6',
     },
     {
       field: 'state',
@@ -448,7 +452,7 @@ const EventRequestsTable = () => {
       width: 250,
       minWidth: 250,
       sortable: true,
-      bgcolor:'#D175B6',
+      bgcolor: '#D175B6',
     },
     {
       field: 'zipcode',
@@ -456,7 +460,7 @@ const EventRequestsTable = () => {
       width: 120,
       minWidth: 120,
       sortable: true,
-      bgcolor:'#D175B6',
+      bgcolor: '#D175B6',
     },
   ];
 
