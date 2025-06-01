@@ -3,7 +3,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Sidebar from './components/Sidebar';
-import EventRequestsTable from './components/EventRequestsTable';
+import EventRequestsTable from './pages/EventRequestsTable';
 import Header from './components/Header';
 
 const darkTheme = createTheme({
