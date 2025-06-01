@@ -50,7 +50,9 @@ export const SaveButton = styled(Button)({
   },
 });
 
-export const MeetingRoomBox = styled(Box)<{ isSelected?: boolean }>(({ isSelected }) => ({
+export const MeetingRoomBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'isSelected',
+})<{ isSelected?: boolean }>(({ isSelected }) => ({
   border: '1px solid #D175B6',
   borderRadius: '8px',
   height: '80px',
