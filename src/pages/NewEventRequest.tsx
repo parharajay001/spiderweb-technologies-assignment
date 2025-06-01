@@ -1,18 +1,16 @@
 import NorthIcon from '@mui/icons-material/North';
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Grid,
-  IconButton,
-  Tab,
-  Tabs,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Autocomplete, Box, Grid, IconButton, Tab, Tabs, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CustomTable, { ColumnDef } from '../components/CustomTable';
+import { MeetingRoom } from '../components/MeetingRoom';
+import { positions, coordinatorOptions, contractorOptions } from '../data/mockPositions';
+import {
+  StyledAutocomplete,
+  StyledContractorAutocomplete,
+  SaveButton,
+  EventInfoBox,
+} from '../components/styled/EventRequestStyles';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -20,24 +18,15 @@ interface TabPanelProps {
   value: number;
 }
 
-function AssignCoordinatorCoordinator(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+function AssignCoordinatorCoordinator() {
   const [page, setPage] = useState(1);
+  const [selectedRoom, setSelectedRoom] = useState(1);
   const rowsPerPage = 7;
 
   const handleChangePage = (event: React.ChangeEvent<unknown>, newPage: number) => {
     setPage(newPage);
   };
 
-  // Mock data for positions
-  const positions = Array(20)
-    .fill(null)
-    .map((_, index) => ({
-      position: `Camera ${index + 1} (Video)`,
-      time: '9 am - 7 pm',
-      info: 'LP default',
-      quantity: 20,
-    }));
   const columns: ColumnDef[] = [
     {
       field: 'position',
@@ -73,32 +62,16 @@ function AssignCoordinatorCoordinator(props: TabPanelProps) {
       width: 200,
       minWidth: 200,
       sortable: true,
-      renderCell: (row) => (
+      renderCell: () => (
         <Autocomplete
           size='small'
           fullWidth
-          options={['Contractor 1', 'Contractor 2', 'Contractor 3']}
+          options={contractorOptions}
           renderInput={(params) => (
-            <TextField
+            <StyledContractorAutocomplete
               {...params}
               size='small'
               placeholder='Select Contractor'
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  height: '36px',
-                  color: '#fff',
-                  '& fieldset': {
-                    borderRadius: '4px',
-                    borderColor: '#D175B6',
-                  },
-                  '&:hover fieldset': {
-                    borderColor: '#D175B6',
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#D175B6',
-                  },
-                },
-              }}
             />
           )}
         />
@@ -107,299 +80,107 @@ function AssignCoordinatorCoordinator(props: TabPanelProps) {
   ];
 
   return (
-    <Box {...other}>
-      <Grid container spacing={'10px'}>
-        <Grid size={6}>
-          <Typography sx={{ fontSize: '24px', fontWeight: '400', mb: 2 }}>
-            Assign Coordinator
-          </Typography>
-          <Box gap={'4px'} sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Autocomplete
-              fullWidth
-              options={['Coordinator 1', 'Coordinator 2', 'Coordinator 3']} // You can add coordinator options here
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  placeholder='Search Coordinator'
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      height: '44px',
-                      color: '#fff',
-                      '& fieldset': {
-                        borderRadius: '8px',
-                        borderColor: '#fff',
-                      },
-                      '&:hover fieldset': {
-                        borderColor: '#fff',
-                      },
-                      '&.Mui-focused fieldset': {
-                        borderColor: '#D175B6',
-                      },
-                    },
-                    '& .MuiInputBase-input': {
-                      color: '#fff',
-                    },
-                  }}
-                />
-              )}
-            />
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'flex-start',
-              }}
-            >
-              <Typography
-                sx={{
-                  fontSize: '16px',
-                  color: '#D175B6',
-                  cursor: 'pointer',
-                }}
-              >
-                Add New Coordinator
-              </Typography>
-            </Box>
+    <Grid container spacing={'10px'}>
+      <Grid size={6}>
+        <Typography sx={{ fontSize: '24px', fontWeight: '400', mb: 2 }}>
+          Assign Coordinator
+        </Typography>
+        <Box gap={'4px'} sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Autocomplete
+            fullWidth
+            options={coordinatorOptions}
+            renderInput={(params) => (
+              <StyledAutocomplete {...params} placeholder='Search Coordinator' />
+            )}
+          />
+          <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <Typography sx={{ fontSize: '16px', color: '#D175B6', cursor: 'pointer' }}>
+              Add New Coordinator
+            </Typography>
           </Box>
-        </Grid>
-        <Grid size={6}>
-          <Typography sx={{ fontSize: '24px', fontWeight: '400', mb: 2 }}>
-            Event Name <span style={{ fontSize: '20px', fontWeight: '300' }}>(Venue Here)</span>
-          </Typography>
-          <Grid container height={'74px'} spacing={'10px'}>
-            <Grid
-              size={12}
-              sx={{
-                border: '1px solid #D175B6',
-                fontSize: '14px',
-                fontWeight: '300',
-                height: '32px',
-                display: 'flex',
-                alignItems: 'center',
-                p: '4px 10px',
-                borderRadius: '3px',
-              }}
-            >
-              <Grid
-                size={6}
-                sx={{
-                  fontSize: '14px',
-                  fontWeight: '300',
-                  height: '32px',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
+        </Box>
+      </Grid>
+      <Grid size={6}>
+        <Typography sx={{ fontSize: '24px', fontWeight: '400', mb: 2 }}>
+          Event Name <span style={{ fontSize: '20px', fontWeight: '300' }}>(Venue Here)</span>
+        </Typography>
+        <Grid container height={'74px'} spacing={'10px'}>
+          <Grid size={12}>
+            <EventInfoBox>
+              <Grid size={6} sx={{ display: 'flex', alignItems: 'center' }}>
                 Start: <span style={{ fontWeight: '500' }}>12-12-2023</span>
               </Grid>
-              <Grid
-                size={6}
-                sx={{
-                  fontSize: '14px',
-                  fontWeight: '300',
-                  height: '32px',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
+              <Grid size={6} sx={{ display: 'flex', alignItems: 'center' }}>
                 Ends: <span style={{ fontWeight: '500' }}>15-12-2023</span>
               </Grid>
-            </Grid>
-            <Grid
-              size={12}
-              sx={{
-                border: '1px solid #D175B6',
-                fontSize: '14px',
-                fontWeight: '300',
-                height: '32px',
-                display: 'flex',
-                alignItems: 'center',
-                p: '4px 10px',
-                borderRadius: '3px',
-              }}
-            >
-              Venue Address: Some Location 12, Name Here, City, State.
-            </Grid>
+            </EventInfoBox>
           </Grid>
-        </Grid>
-        <Grid size={12}>
-          <Typography sx={{ fontSize: '24px', fontWeight: '400', mb: 2 }}>
-            Assign Contractor
-          </Typography>
-          <Grid container spacing={'20px'}>
-            <Grid size={3.1}>
-              <Box
-                sx={{
-                  border: '1px solid #D175B6',
-                  borderRadius: '12px',
-                  gap: '16px',
-                  padding: '16px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  bgcolor: '#000000',
-                  boxShadow: '0px 0px 30px 0px #FFFFFF33',
-                }}
-              >
-                {[1, 2, 3, 4, 5].map((room) => (
-                  <Box
-                    className='meeting-room'
-                    key={room}
-                    sx={{
-                      border: '1px solid #D175B6',
-                      borderRadius: '8px',
-                      height: '80px',
-                      padding: '16px',
-                      cursor: 'pointer',
-                      ...(room === 1 ? { backgroundColor: '#D175B6' } : {}),
-                      boxShadow: '0px 0px 30px 0px #D175B633',
-                      '&:hover': {
-                        backgroundColor: '#D175B666',
-                      },
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <Typography sx={{ fontSize: '20px', fontWeight: '500' }}>
-                        Meeting Room {room}
-                      </Typography>
-                      <svg
-                        width='36'
-                        height='36'
-                        viewBox='0 0 36 36'
-                        fill='none'
-                        xmlns='http://www.w3.org/2000/svg'
-                      >
-                        <g filter='url(#filter0_d_0_481)'>
-                          <path
-                            d='M18 10L20.4324 15.5676L26 18L20.4324 20.4324L18 26L15.5676 20.4324L10 18L15.5676 15.5676L18 10Z'
-                            fill='#D175B6'
-                          />
-                          <path
-                            d='M19.9746 15.7676L20.0527 15.9473L20.2324 16.0254L24.751 18L20.2324 19.9746L20.0527 20.0527L19.9746 20.2324L18 24.751L16.0254 20.2324L15.9473 20.0527L15.7676 19.9746L11.248 18L15.7676 16.0254L15.9473 15.9473L16.0254 15.7676L18 11.248L19.9746 15.7676Z'
-                            stroke='white'
-                          />
-                        </g>
-                        <defs>
-                          <filter
-                            id='filter0_d_0_481'
-                            x='0'
-                            y='0'
-                            width='36'
-                            height='36'
-                            filterUnits='userSpaceOnUse'
-                            color-interpolation-filters='sRGB'
-                          >
-                            <feFlood flood-opacity='0' result='BackgroundImageFix' />
-                            <feColorMatrix
-                              in='SourceAlpha'
-                              type='matrix'
-                              values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
-                              result='hardAlpha'
-                            />
-                            <feOffset />
-                            <feGaussianBlur stdDeviation='5' />
-                            <feComposite in2='hardAlpha' operator='out' />{' '}
-                            <feColorMatrix
-                              type='matrix'
-                              values={
-                                room === 1
-                                  ? '0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'
-                                  : '0 0 0 0 0.82 0 0 0 0 0.46 0 0 0 0 0.71 0 0 0 1 0'
-                              }
-                            />
-                            <feBlend
-                              mode='normal'
-                              in2='BackgroundImageFix'
-                              result='effect1_dropShadow_0_481'
-                            />
-                            <feBlend
-                              mode='normal'
-                              in='SourceGraphic'
-                              in2='effect1_dropShadow_0_481'
-                              result='shape'
-                            />
-                          </filter>
-                        </defs>
-                      </svg>{' '}
-                      <Typography
-                        sx={{
-                          fontSize: '16px',
-                          fontWeight: '500',
-                          color: room === 1 ? '#000000' : '#D175B6',
-                          '.meeting-room:hover &': {
-                            color: room === 1 ? '#ffffff' : '#D175B6',
-                          },
-                        }}
-                      >
-                        {12} Positions
-                      </Typography>
-                    </Box>
-                    <Typography sx={{ fontSize: '12px', color: '#FFFFFF' }}>
-                      Start from 12 Jan 2023 - Ends at 15 Jan 2023
-                    </Typography>
-                  </Box>
-                ))}
-              </Box>
-            </Grid>
-            <Grid size={8.9}>
-              <Box>
-                <Typography sx={{ fontSize: '18px', fontWeight: '500', mb: '12px' }}>
-                  Positions
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  border: '1px solid #D175B6',
-                  height: '460px',
-                  borderRadius: '12px',
-                  bgcolor: '#000000',
-                  boxShadow: '0px 0px 30px 0px #FFFFFF33',
-                  overflow: 'hidden',
-                }}
-              >
-                <CustomTable
-                  columns={columns}
-                  rows={positions}
-                  page={page}
-                  rowsPerPage={rowsPerPage}
-                  onPageChange={handleChangePage}
-                />
-              </Box>
-            </Grid>
-            <Grid
-              size={12}
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <Button
-                variant='contained'
-                sx={{
-                  backgroundColor: '#D175B6',
-                  color: '#fff',
-                  height: '60px',
-                  width: '210px',
-                  padding: '16px 60px',
-                  borderRadius: '8px',
-                  boxShadow: '0px 0px 20px 0px #00000099 inset, 0px 30px 80px 0px #FF00FF4D',
-                  '&:hover': {
-                    backgroundColor: '#D175B6CC',
-                  },
-                }}
-              >
-                Save Edits
-              </Button>
-            </Grid>
+          <Grid size={12}>
+            <EventInfoBox>Venue Address: Some Location 12, Name Here, City, State.</EventInfoBox>
           </Grid>
         </Grid>
       </Grid>
-    </Box>
+      <Grid size={12}>
+        <Typography sx={{ fontSize: '24px', fontWeight: '400', mb: 2 }}>
+          Assign Contractor
+        </Typography>
+        <Grid container spacing={'20px'}>
+          <Grid size={3.1}>
+            <Box
+              sx={{
+                border: '1px solid #D175B6',
+                borderRadius: '12px',
+                gap: '16px',
+                padding: '16px',
+                display: 'flex',
+                flexDirection: 'column',
+                bgcolor: '#000000',
+                boxShadow: '0px 0px 30px 0px #FFFFFF33',
+              }}
+            >
+              {[1, 2, 3, 4, 5].map((room) => (
+                <MeetingRoom
+                  key={room}
+                  roomNumber={room}
+                  isSelected={selectedRoom === room}
+                  positionCount={12}
+                  dateRange='Start from 12 Jan 2023 - Ends at 15 Jan 2023'
+                  onSelect={setSelectedRoom}
+                />
+              ))}
+            </Box>
+          </Grid>
+          <Grid size={8.9}>
+            <Box>
+              <Typography sx={{ fontSize: '18px', fontWeight: '500', mb: '12px' }}>
+                Positions
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                border: '1px solid #D175B6',
+                height: '460px',
+                borderRadius: '12px',
+                bgcolor: '#000000',
+                boxShadow: '0px 0px 30px 0px #FFFFFF33',
+                overflow: 'hidden',
+              }}
+            >
+              <CustomTable
+                columns={columns}
+                rows={positions}
+                page={page}
+                rowsPerPage={rowsPerPage}
+                onPageChange={handleChangePage}
+              />
+            </Box>
+          </Grid>
+          <Grid size={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <SaveButton variant='contained'>Save Edits</SaveButton>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
 
@@ -438,22 +219,12 @@ export default function NewEventRequest() {
     <Box
       sx={{ height: '100%', display: 'flex', flexDirection: 'column', p: '20px 40px', gap: '20px' }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '10px',
-        }}
-      >
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <IconButton
           onClick={() => navigate(-1)}
           sx={{ height: '40px', width: '40px', background: '#FFFFFF1A', borderRadius: '50%' }}
         >
-          <NorthIcon
-            sx={{
-              transform: 'rotate(-90deg)',
-            }}
-          />
+          <NorthIcon sx={{ transform: 'rotate(-90deg)' }} />
         </IconButton>
         <Typography sx={{ fontSize: '40px', fontWeight: '400' }}>
           Event Name <span style={{ fontSize: '24px', fontWeight: '300' }}>(Venue Details)</span>
@@ -503,9 +274,7 @@ export default function NewEventRequest() {
           Event Details
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <AssignCoordinatorCoordinator value={value} index={1}>
-            Assign Coordinator/Coordinator
-          </AssignCoordinatorCoordinator>
+          <AssignCoordinatorCoordinator />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
           Session Management
