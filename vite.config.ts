@@ -11,7 +11,7 @@ export default defineConfig({
       }
     })
   ],
-  base: '/spiderweb-technologies-assignment/',
+  base: '/',
   resolve: {
     alias: {
       '@': '/src'
