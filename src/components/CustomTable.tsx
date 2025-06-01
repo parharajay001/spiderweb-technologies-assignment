@@ -159,7 +159,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
                       }`}
                       title={row[column.field]?.toString()}
                     >
-                      {column.renderCell ? column.renderCell(row) : row[column.field]}
+                      {column.renderCell ? column.renderCell({ row }) : row[column.field]}
                     </TableCell>
                   ))}
                 </TableRow>

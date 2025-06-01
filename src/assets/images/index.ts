@@ -1,3 +1,3 @@
-import ProfileImage from './profile_image.jpg';
+const ProfileImage = new URL('./profile_image.jpg', import.meta.url).href;
 
 export { ProfileImage };
