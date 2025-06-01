@@ -80,12 +80,12 @@ function AssignCoordinatorCoordinator() {
   ];
 
   return (
-    <Grid container spacing={'10px'}>
+    <Grid container spacing={'20px'}>
       <Grid size={6}>
         <Typography sx={{ fontSize: '24px', fontWeight: '400', mb: 2 }}>
           Assign Coordinator
         </Typography>
-        <Box gap={'4px'} sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Grid gap={'4px'} sx={{ display: 'flex', flexDirection: 'column' }}>
           <Autocomplete
             fullWidth
             options={coordinatorOptions}
@@ -93,12 +93,12 @@ function AssignCoordinatorCoordinator() {
               <StyledAutocomplete {...params} placeholder='Search Coordinator' />
             )}
           />
-          <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <Grid sx={{ display: 'flex', justifyContent: 'flex-start' }}>
             <Typography sx={{ fontSize: '16px', color: '#D175B6', cursor: 'pointer' }}>
               Add New Coordinator
             </Typography>
-          </Box>
-        </Box>
+          </Grid>
+        </Grid>
       </Grid>
       <Grid size={6}>
         <Typography sx={{ fontSize: '24px', fontWeight: '400', mb: 2 }}>
@@ -126,7 +126,7 @@ function AssignCoordinatorCoordinator() {
         </Typography>
         <Grid container spacing={'20px'}>
           <Grid size={3.1}>
-            <Box
+            <Grid
               sx={{
                 border: '1px solid #D175B6',
                 borderRadius: '12px',
@@ -148,15 +148,15 @@ function AssignCoordinatorCoordinator() {
                   onSelect={setSelectedRoom}
                 />
               ))}
-            </Box>
+            </Grid>
           </Grid>
           <Grid size={8.9}>
-            <Box>
+            <Grid>
               <Typography sx={{ fontSize: '18px', fontWeight: '500', mb: '12px' }}>
                 Positions
               </Typography>
-            </Box>
-            <Box
+            </Grid>
+            <Grid
               sx={{
                 border: '1px solid #D175B6',
                 height: '460px',
@@ -173,7 +173,7 @@ function AssignCoordinatorCoordinator() {
                 rowsPerPage={rowsPerPage}
                 onPageChange={handleChangePage}
               />
-            </Box>
+            </Grid>
           </Grid>
           <Grid size={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <SaveButton variant='contained'>Save Edits</SaveButton>
@@ -195,7 +195,7 @@ function CustomTabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Grid sx={{ p: 3 }}>{children}</Grid>}
     </div>
   );
 }
@@ -216,73 +216,74 @@ export default function NewEventRequest() {
   };
 
   return (
-    <Box
-      sx={{ height: '100%', display: 'flex', flexDirection: 'column', p: '20px 40px', gap: '20px' }}
-    >
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        <IconButton
-          onClick={() => navigate(-1)}
-          sx={{ height: '40px', width: '40px', background: '#FFFFFF1A', borderRadius: '50%' }}
-        >
-          <NorthIcon sx={{ transform: 'rotate(-90deg)' }} />
-        </IconButton>
-        <Typography sx={{ fontSize: '40px', fontWeight: '400' }}>
-          Event Name <span style={{ fontSize: '24px', fontWeight: '300' }}>(Venue Details)</span>
-        </Typography>
-      </Box>
+    <Grid container spacing={'20px'} sx={{ p: '20px 40px' }}>
+      <Grid size={12}>
+        <Grid sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <IconButton
+            onClick={() => navigate(-1)}
+            sx={{ height: '40px', width: '40px', background: '#FFFFFF1A', borderRadius: '50%' }}
+          >
+            <NorthIcon sx={{ transform: 'rotate(-90deg)' }} />
+          </IconButton>
+          <Typography sx={{ fontSize: { xs: '36px', md: '40px' }, fontWeight: '400' }}>
+            Event Name
+          </Typography>
+          <Typography style={{ fontSize: '24px', fontWeight: '300' }}>(Venue Details)</Typography>
+        </Grid>
 
-      <Box sx={{ width: '100%' }}>
-        <Box
-          sx={{
-            width: '674px',
-            height: '50px',
-            borderRadius: '8px',
-            border: '2px solid #D175B6',
-            overflow: 'hidden',
-          }}
-        >
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label='basic tabs example'
+        <Grid sx={{ width: '100%' }}>
+          <Grid
             sx={{
-              '& .MuiTab-root': {
-                padding: '0px 20px',
-                transition: 'all 0.3s ease-in-out',
-                '&.Mui-selected': {
-                  background: '#D175B6',
-                  color: '#fff',
-                },
-                '&:hover': {
-                  background: '#D175B666',
-                  color: '#fff',
-                },
-              },
+              width: '674px',
+              height: '50px',
+              borderRadius: '8px',
+              border: '2px solid #D175B6',
+              overflow: 'hidden',
             }}
           >
-            <Tab sx={{ textTransform: 'none' }} label='Event Details' {...a11yProps(0)} />
-            <Tab
-              sx={{ textTransform: 'none' }}
-              label='Assign Coordinator/Coordinator'
-              {...a11yProps(1)}
-            />
-            <Tab sx={{ textTransform: 'none' }} label='Session Management' {...a11yProps(2)} />
-            <Tab sx={{ textTransform: 'none' }} label='Generate SOW' {...a11yProps(3)} />
-          </Tabs>
-        </Box>
-        <CustomTabPanel value={value} index={0}>
-          Event Details
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-          <AssignCoordinatorCoordinator />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={2}>
-          Session Management
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={3}>
-          Generate SOW
-        </CustomTabPanel>
-      </Box>
-    </Box>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label='basic tabs example'
+              sx={{
+                '& .MuiTab-root': {
+                  padding: '0px 20px',
+                  transition: 'all 0.3s ease-in-out',
+                  '&.Mui-selected': {
+                    background: '#D175B6',
+                    color: '#fff',
+                  },
+                  '&:hover': {
+                    background: '#D175B666',
+                    color: '#fff',
+                  },
+                },
+              }}
+            >
+              <Tab sx={{ textTransform: 'none' }} label='Event Details' {...a11yProps(0)} />
+              <Tab
+                sx={{ textTransform: 'none' }}
+                label='Assign Coordinator/Coordinator'
+                {...a11yProps(1)}
+              />
+              <Tab sx={{ textTransform: 'none' }} label='Session Management' {...a11yProps(2)} />
+              <Tab sx={{ textTransform: 'none' }} label='Generate SOW' {...a11yProps(3)} />
+            </Tabs>
+          </Grid>
+          <CustomTabPanel value={value} index={0}>
+            Event Details
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={1}>
+            <AssignCoordinatorCoordinator />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={2}>
+            Session Management
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={3}>
+            Generate SOW
+          </CustomTabPanel>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
