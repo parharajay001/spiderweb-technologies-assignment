@@ -11,7 +11,7 @@ export default defineConfig({
       }
     })
   ],
-  base: '/event-dashboard/',
+  base: '/spiderweb-technologies-assignment/',
   resolve: {
     alias: {
       '@': '/src'
