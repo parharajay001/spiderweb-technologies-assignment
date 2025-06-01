@@ -397,7 +397,14 @@ const EventRequestsTable = () => {
 
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          p: '20px 40px',
+        }}
+      >
         <Typography sx={{ fontSize: '40px', fontWeight: 'bold' }}>Event Requests</Typography>
 
         <Box sx={{ display: 'flex', gap: '10px' }}>
