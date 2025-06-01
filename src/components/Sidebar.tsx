@@ -1,5 +1,5 @@
 // src/components/Sidebar.tsx
-import { Box, List, ListItemButton, ListItemText, Typography, Collapse } from '@mui/material';
+import { Box, List, ListItemButton, ListItemText, Typography, Collapse, Drawer } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -13,28 +13,67 @@ interface SidebarProps {
   selectedSection: string;
   onSectionChange: (section: string) => void;
   onLogout?: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
 interface OpenSections {
   [key: string]: boolean;
 }
 
-const SidebarContainer = ({ children }: { children: React.ReactNode }) => (
-  <Box
-    sx={{
-      position: 'relative',
-      width: '300px',
-      border: '2px solid #D175B6',
-      borderRadius: '16px',
-      display: { xs: 'none', sm: 'block' },
-      flexDirection: 'column',
-      overflowY: 'auto',
-      boxShadow: '0px 0px 30px 0px #D175B633',
-    }}
-  >
-    {children}
-  </Box>
-);
+const SidebarContainer = ({ children, isOpen, onClose }: { children: React.ReactNode, isOpen?: boolean, onClose?: () => void }) => {
+  const content = (
+    <Box
+      sx={{
+        position: 'relative',
+        width: '300px',
+        height: '100%',
+        border: '2px solid #D175B6',
+        borderRadius: { xs: 0, sm: '16px' },
+        display: 'flex',
+        flexDirection: 'column',
+        overflowY: 'auto',
+        boxShadow: '0px 0px 30px 0px #D175B633',
+        bgcolor: '#121212',
+      }}
+    >
+      {children}
+    </Box>
+  );
+
+  // For mobile and tablet, render in a Drawer
+  return (
+    <>
+      {/* Mobile/Tablet Drawer */}
+      <Drawer
+        anchor="left"
+        open={isOpen}
+        onClose={onClose}
+        sx={{
+          display: { xs: 'block', md: 'none' },
+          '& .MuiDrawer-paper': {
+            bgcolor: 'transparent',
+            border: 'none',
+          },
+        }}
+        ModalProps={{
+          keepMounted: true, // Better mobile performance
+        }}
+      >
+        {content}
+      </Drawer>
+
+      {/* Desktop permanent sidebar */}
+      <Box
+        sx={{
+          display: { xs: 'none', md: 'block' },
+        }}
+      >
+        {content}
+      </Box>
+    </>
+  );
+};
 
 const SectionItem = ({
   section,
@@ -147,7 +186,7 @@ const SubsectionItem = ({
   </Box>
 );
 
-export const Sidebar: React.FC<SidebarProps> = ({ selectedSection, onSectionChange, onLogout }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ selectedSection, onSectionChange, onLogout, isOpen, onClose }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [openSections, setOpenSections] = useState<OpenSections>({
@@ -165,6 +204,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedSection, onSectionChan
   const handleNavigation = (section: string, path: string) => {
     onSectionChange(section);
     navigate(path);
+    // Close sidebar on mobile/tablet after navigation
+    if (onClose) {
+      onClose();
+    }
   };
 
   const handleLogout = () => {
@@ -176,7 +219,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedSection, onSectionChan
   };
 
   return (
-    <SidebarContainer>
+    <SidebarContainer isOpen={isOpen} onClose={onClose}>
       <List sx={{ flex: 1, p: 2 }}>
         {sections.map((section, index) => (
           <Box key={section.name}>            <SectionItem

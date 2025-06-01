@@ -46,6 +46,7 @@ const darkTheme = createTheme({
 
 function App() {
   const location = useLocation();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedSection, setSelectedSection] = useState(() => {
     const path = location.pathname;
     if (path.startsWith('/events')) return 'Events';
@@ -55,6 +56,14 @@ function App() {
     if (path.startsWith('/profile')) return 'Profile';
     return 'Events';
   });
+
+  const handleToggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const handleCloseSidebar = () => {
+    setIsSidebarOpen(false);
+  };
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -67,9 +76,22 @@ function App() {
           overflow: 'hidden',
         }}
       >
-        <Header />
-        <Box sx={{ display: 'flex', flex: 1, overflow: 'hidden', p: '40px 40px', gap: 2 }}>
-          <Sidebar selectedSection={selectedSection} onSectionChange={setSelectedSection} />
+        <Header onToggleSidebar={handleToggleSidebar} isSidebarOpen={isSidebarOpen} />
+        <Box
+          sx={{
+            display: 'flex',
+            flex: 1,
+            overflow: 'hidden',
+            p: { xs: '20px', sm: '30px', md: '40px' },
+            gap: 2,
+          }}
+        >
+          <Sidebar
+            selectedSection={selectedSection}
+            onSectionChange={setSelectedSection}
+            isOpen={isSidebarOpen}
+            onClose={handleCloseSidebar}
+          />
           <Box
             sx={{
               flex: 1,
